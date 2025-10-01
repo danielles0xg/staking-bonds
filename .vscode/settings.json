@@ -1,0 +1,14 @@
+{
+    "[solidity]": {
+        "editor.defaultFormatter": "JuanBlanco.solidity"
+    },
+    "editor.formatOnSave": true,
+    "solidity.formatter": "forge",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "[rust]": {
+        "editor.defaultFormatter": "rust-lang.rust-analyzer",
+        "editor.formatOnSave": true
+    },
+    "slither.solcPath": "/Users/danielguerrero/Library/Python/3.9/bin/solc",
+    "slither.hiddenDetectors": []
+}

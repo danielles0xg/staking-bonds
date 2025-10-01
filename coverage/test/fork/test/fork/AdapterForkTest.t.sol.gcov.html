@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - lcov.info - test/fork/test/fork/AdapterForkTest.t.sol</title>
+  <link rel="stylesheet" type="text/css" href="../../../../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../../../../index.html">top level</a> - <a href="index.html">test/fork/test/fork</a> - AdapterForkTest.t.sol<span style="font-size: 80%;"> (source / <a href="AdapterForkTest.t.sol.func-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">lcov.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryLo">0.0&nbsp;%</td>
+            <td class="headerCovTableEntry">23</td>
+            <td class="headerCovTableEntry">0</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2024-07-23 18:43:44</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntryLo">0.0&nbsp;%</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">0</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="headerItem">Branches:</td>
+            <td class="headerCovTableEntryLo">0.0&nbsp;%</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">0</td>
+          </tr>
+                  <tr><td><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">             Branch data     Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>                 :             : // SPDX-License-Identifier: MIT</span>
+<span id="L2"><span class="lineNum">       2</span>                 :             : pragma solidity ^0.8.20;</span>
+<span id="L3"><span class="lineNum">       3</span>                 :             : </span>
+<span id="L4"><span class="lineNum">       4</span>                 :             : import {Test, console, console2, Vm} from 'forge-std/Test.sol';</span>
+<span id="L5"><span class="lineNum">       5</span>                 :             : import {IEthVault, IKeeperRewards} from '../../src/adapters/StakeWise/interfaces/IEthVault.sol';</span>
+<span id="L6"><span class="lineNum">       6</span>                 :             : </span>
+<span id="L7"><span class="lineNum">       7</span>                 :             : contract AdapterForkTest is Test {</span>
+<span id="L8"><span class="lineNum">       8</span>                 :             :     IEthVault public vault;</span>
+<span id="L9"><span class="lineNum">       9</span>                 :             :     address public SW_HOLESKY_VAULT = 0x472D1A6342E007A5F5E6C674c9D514ae5A3a2fC4;</span>
+<span id="L10"><span class="lineNum">      10</span>                 :             :     address public SW_HOLESKY_RWRDS = 0xB580799Bf7d62721D1a523f0FDF2f5Ed7BA4e259;</span>
+<span id="L11"><span class="lineNum">      11</span>                 :             : </span>
+<span id="L12"><span class="lineNum">      12</span>                 :             :     string constant TESTNET = 'https://holesky.infura.io/v3/41da61585a3c420cb9067f9e5edb5d0c';</span>
+<span id="L13"><span class="lineNum">      13</span>                 :             : </span>
+<span id="L14"><span class="lineNum">      14</span>                 :<span class="tlaUNC tlaBgUNC">           0 :     function setUp() public {</span></span>
+<span id="L15"><span class="lineNum">      15</span>                 :<span class="tlaUNC">           0 :         vault = IEthVault(SW_HOLESKY_VAULT);</span></span>
+<span id="L16"><span class="lineNum">      16</span>                 :<span class="tlaUNC">           0 :         vm.createSelectFork(TESTNET);</span></span>
+<span id="L17"><span class="lineNum">      17</span>                 :<span class="tlaUNC">           0 :         console.log('init time', vm.getBlockTimestamp());</span></span>
+<span id="L18"><span class="lineNum">      18</span>                 :             :     }</span>
+<span id="L19"><span class="lineNum">      19</span>                 :             : </span>
+<span id="L20"><span class="lineNum">      20</span>                 :<span class="tlaUNC">           0 :     function ethVaultFlow() public {</span></span>
+<span id="L21"><span class="lineNum">      21</span>                 :             :         // deposit 1 eth</span>
+<span id="L22"><span class="lineNum">      22</span>                 :<span class="tlaUNC">           0 :         uint256 shares = vault.deposit{value: 1 ether}(address(this), address(0x0));</span></span>
+<span id="L23"><span class="lineNum">      23</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :         assert(vault.convertToAssets(shares) == 1 ether);</span></span>
+<span id="L24"><span class="lineNum">      24</span>                 :             : </span>
+<span id="L25"><span class="lineNum">      25</span>                 :             :         // warp 20 days</span>
+<span id="L26"><span class="lineNum">      26</span>                 :<span class="tlaUNC">           0 :         vm.warp(vm.getBlockTimestamp() + 20 days);</span></span>
+<span id="L27"><span class="lineNum">      27</span>                 :             : </span>
+<span id="L28"><span class="lineNum">      28</span>                 :             :         // enter exit queue</span>
+<span id="L29"><span class="lineNum">      29</span>                 :<span class="tlaUNC">           0 :         console.log('enterExitQueue time', block.timestamp);</span></span>
+<span id="L30"><span class="lineNum">      30</span>                 :<span class="tlaUNC">           0 :         uint256 ticket = vault.enterExitQueue(vault.getShares(address(this)), address(this));</span></span>
+<span id="L31"><span class="lineNum">      31</span>                 :<span class="tlaUNC">           0 :         uint256 timestamp = vm.getBlockTimestamp();</span></span>
+<span id="L32"><span class="lineNum">      32</span>                 :             : </span>
+<span id="L33"><span class="lineNum">      33</span>                 :             :         // mock keeeper</span>
+<span id="L34"><span class="lineNum">      34</span>                 :<span class="tlaUNC">           0 :         bytes32[] memory proof = new bytes32[](6);</span></span>
+<span id="L35"><span class="lineNum">      35</span>                 :<span class="tlaUNC">           0 :         proof[0] = 0x5b2b86cea4e64cf68b43877e45986ce6d89a812bc333e7f2c2c1179b2b5de19f;</span></span>
+<span id="L36"><span class="lineNum">      36</span>                 :<span class="tlaUNC">           0 :         proof[1] = 0x60d6c52b4b156222c2d3553e257890ea92337cf21c6f8a147cf8a8653993baf1;</span></span>
+<span id="L37"><span class="lineNum">      37</span>                 :<span class="tlaUNC">           0 :         proof[2] = 0x08dc67ba8a3f1f3a4a26af7579384382c30952263e1c56d1fbd0c4df9d29f1d7;</span></span>
+<span id="L38"><span class="lineNum">      38</span>                 :<span class="tlaUNC">           0 :         proof[3] = 0x63f6049c4e5c297173c84be636263da10490731a0879f32a2ee768cc6a12734d;</span></span>
+<span id="L39"><span class="lineNum">      39</span>                 :<span class="tlaUNC">           0 :         proof[4] = 0x44cbf41f6df899c2ec6d19862f40d3cd7e305dc56c9ce7eb04158cadd7f83974;</span></span>
+<span id="L40"><span class="lineNum">      40</span>                 :<span class="tlaUNC">           0 :         proof[5] = 0xb9c45b1a9063b675bb3fa296d37851a4af900a0377bf7da1d86adc3e23f4d163;</span></span>
+<span id="L41"><span class="lineNum">      41</span>                 :<span class="tlaUNC">           0 :         bytes32 root = IKeeperRewards(SW_HOLESKY_RWRDS).rewardsRoot();</span></span>
+<span id="L42"><span class="lineNum">      42</span>                 :<span class="tlaUNC">           0 :         console2.logBytes32(root);</span></span>
+<span id="L43"><span class="lineNum">      43</span>                 :             : </span>
+<span id="L44"><span class="lineNum">      44</span>                 :<span class="tlaUNC">           0 :         vm.prank(address(vault));</span></span>
+<span id="L45"><span class="lineNum">      45</span>                 :<span class="tlaUNC">           0 :         vault.updateState(IKeeperRewards.HarvestParams({rewardsRoot: root, reward: 34688051606162985825, unlockedMevReward: 438934671162985825, proof: proof}));</span></span>
+<span id="L46"><span class="lineNum">      46</span>                 :             : </span>
+<span id="L47"><span class="lineNum">      47</span>                 :             :         // warp 20 days</span>
+<span id="L48"><span class="lineNum">      48</span>                 :<span class="tlaUNC">           0 :         vm.warp(vm.getBlockTimestamp() + 20 days);</span></span>
+<span id="L49"><span class="lineNum">      49</span>                 :             : </span>
+<span id="L50"><span class="lineNum">      50</span>                 :             :         // claim exited assets</span>
+<span id="L51"><span class="lineNum">      51</span>                 :<span class="tlaUNC">           0 :         console.log('unstake time', vm.getBlockTimestamp());</span></span>
+<span id="L52"><span class="lineNum">      52</span>                 :<span class="tlaUNC">           0 :         (uint256 newPositionTicket, uint256 claimedShares, uint256 claimedAssets) = vault.claimExitedAssets(ticket, timestamp, uint256(vault.getExitQueueIndex(ticket)));</span></span>
+<span id="L53"><span class="lineNum">      53</span>                 :             :     }</span>
+<span id="L54"><span class="lineNum">      54</span>                 :             : }</span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.0-1</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>

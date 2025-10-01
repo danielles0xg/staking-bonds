@@ -1,0 +1,386 @@
+{
+  "manifestVersion": "3.2",
+  "proxies": [],
+  "impls": {
+    "15e24002548c5d1f9c70d3cb5e7149a6cb8b7d6f88319bee6d15cd013542ed55": {
+      "address": "0x3A6221e2e35e316F97C8BdDc2bdd828892280c14",
+      "txHash": "0x0b563fdc3774b505c6bdc084818e5ab8e349586259dfb09a5f193ababa513e4f",
+      "layout": {
+        "solcVersion": "0.8.22",
+        "storage": [
+          {
+            "label": "_pyeToken",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_contract(IERC1155)1194",
+            "contract": "PyeStakeWise",
+            "src": "src/adapters/StakeWise/PyeStakeWise.sol:16"
+          },
+          {
+            "label": "_position",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_struct(StakePosition)3198_storage",
+            "contract": "PyeStakeWise",
+            "src": "src/adapters/StakeWise/PyeStakeWise.sol:21"
+          },
+          {
+            "label": "_exitRequest",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_struct(ExitRequest)3205_storage",
+            "contract": "PyeStakeWise",
+            "src": "src/adapters/StakeWise/PyeStakeWise.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "PyeStakeWise",
+            "src": "src/adapters/StakeWise/PyeStakeWise.sol:210"
+          }
+        ],
+        "types": {
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_struct(InitializableStorage)84_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_contract(IERC1155)1194": {
+            "label": "contract IERC1155",
+            "numberOfBytes": "20"
+          },
+          "t_struct(ExitRequest)3205_storage": {
+            "label": "struct IPyeVault.ExitRequest",
+            "members": [
+              {
+                "label": "exitTicket",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "timestamp",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "leftShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "96"
+          },
+          "t_struct(StakePosition)3198_storage": {
+            "label": "struct IPyeVault.StakePosition",
+            "members": [
+              {
+                "label": "principal",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "maturity",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "principalShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "pricePerShare",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "pTokenId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "yTokenId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              }
+            ],
+            "numberOfBytes": "192"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    },
+    "a7957877861f13994f6d70bfedc8752e7133e6791aa3ee83c37dc6e496b24bad": {
+      "address": "0x3eDBB565e50b912056230431583101e4Ef327b08",
+      "txHash": "0xa38e95d8cca7c6b84f7f1f4b31de829855b4a4d26cb6ec40c0c04acd06160c17",
+      "layout": {
+        "solcVersion": "0.8.22",
+        "storage": [
+          {
+            "label": "_pyeToken",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_contract(IERC1155)1579",
+            "contract": "PyeStakeWise",
+            "src": "src/adapters/StakeWise/PyeStakeWise.sol:16"
+          },
+          {
+            "label": "_withdrawableAssets",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256",
+            "contract": "PyeStakeWise",
+            "src": "src/adapters/StakeWise/PyeStakeWise.sol:28"
+          },
+          {
+            "label": "_position",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_struct(StakePosition)5672_storage",
+            "contract": "PyeStakeWise",
+            "src": "src/adapters/StakeWise/PyeStakeWise.sol:30"
+          },
+          {
+            "label": "_exitRequest",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_struct(ExitRequest)5687_storage",
+            "contract": "PyeStakeWise",
+            "src": "src/adapters/StakeWise/PyeStakeWise.sol:31"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "16",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "PyeStakeWise",
+            "src": "src/adapters/StakeWise/PyeStakeWise.sol:297"
+          }
+        ],
+        "types": {
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_struct(InitializableStorage)84_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_contract(IERC1155)1579": {
+            "label": "contract IERC1155",
+            "numberOfBytes": "20"
+          },
+          "t_struct(ExitRequest)5687_storage": {
+            "label": "struct IPyeVault.ExitRequest",
+            "members": [
+              {
+                "label": "counter",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "exitTicket",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "timestamp",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "leftShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "principalAssets",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "yieldAssets",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "exitSharePrice",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              }
+            ],
+            "numberOfBytes": "224"
+          },
+          "t_struct(StakePosition)5672_storage": {
+            "label": "struct IPyeVault.StakePosition",
+            "members": [
+              {
+                "label": "principal",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "ptYieldPercent",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "maturity",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "principalShares",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "openSharePrice",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "pTokenId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "yTokenId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              }
+            ],
+            "numberOfBytes": "224"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          },
+          "t_uint96": {
+            "label": "uint96",
+            "numberOfBytes": "12"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "openzeppelin-contracts-upgradeable/contracts/proxy/utils/Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

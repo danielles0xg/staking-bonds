@@ -1,0 +1,28 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+auto_detect_solc = true
+evm_version = 'shanghai'
+ffi = true
+fs_permissions = [{ access = "read-write", path = "./"}]
+no_storage_caching = true
+ast = true
+extra_output = ["storageLayout"]
+via_ir = true
+solc = '0.8.22'
+
+[rpc_endpoints]
+holesky="${HOLESKY_URL}"
+sepolia="${SEPOLIA_URL}"
+
+[etherscan]
+holesky = { key = "${ETHERSCAN_API_KEY}" }
+sepolia = { key = "${ETHERSCAN_API_KEY}" }
+
+[fmt]
+line_length = 300
+quote_style = 'single'
+
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options

@@ -1,0 +1,35 @@
+{
+  "description": "pye-yield-token on holesky",
+  "image":"https://images.assetsdelivery.com/compings_v2/tridraw/tridraw2108/tridraw210803229.jpg",
+  "name": "pye-yield-token-holesky",
+  "attributes": [
+    {
+      "trait_type": "maturity",
+      "value": "2024-06-21T11:31:04-07:00"
+    },
+    {
+      "trait_type": "principal-amount",
+      "value": 100000000000000000
+    },
+    {
+      "trait_type": "principal-token-yield-percentage",
+      "value": 10
+    },
+    {
+      "trait_type": "minted-yield-token-shares",
+      "value": "755571260213376402301055709123220000000000000"
+    },
+    {
+      "trait_type": "network",
+      "value": "holesky"
+    },
+    {
+      "trait_type": "token-type",
+      "value": "pye-yield-token"
+    },
+    {
+      "trait_type": "vault-apy",
+      "value": 3364049230568942
+    }
+  ]
+}
