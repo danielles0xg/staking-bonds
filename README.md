@@ -1,6 +1,6 @@
-## P.Y.E. - Principal and Yield Extraction Protocol
+## PYE - split eth staking into principal and yield lst's
 
-**P.Y.E.** is a DeFi protocol that enables users to separate principal and yield from staking positions into two distinct, independently tradable tokens. By integrating with StakeWise v3 vaults, P.Y.E. transforms a single ETH staking position into liquid derivatives that unlock new trading and hedging strategies.
+Pye enables users to separate principal and yield from staking positions into two distinct, independently tradable tokens. By integrating with StakeWise v3 vaults, P.Y.E. transforms a single ETH staking position into liquid derivatives that unlock new trading and hedging strategies.
 
 ### Overview
 
@@ -167,12 +167,6 @@ forge script script/SystemDeploy.s.sol:SystemDeploy  --rpc-url $HOLESKY_URL  --c
       - assets must be always less than p/y tranche
     - 4.- Transfers assets to user
       - PYE tokens are burned
-
----
-
-#### Test
-
-`forge t`
 
 ---
 
