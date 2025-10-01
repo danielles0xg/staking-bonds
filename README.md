@@ -1,45 +1,109 @@
-## P.Y.E.
+## P.Y.E. - Principal and Yield Extraction Protocol
 
-The PYE token is an ERC1155 Token that creates a new Staking position contract on every staking deposit.
+**P.Y.E.** is a DeFi protocol that enables users to separate principal and yield from staking positions into two distinct, independently tradable tokens. By integrating with StakeWise v3 vaults, P.Y.E. transforms a single ETH staking position into liquid derivatives that unlock new trading and hedging strategies.
 
-## Development
+### Overview
 
-To run locally
+When users deposit ETH through P.Y.E., the protocol:
 
-```ssh
-forge install
-forge build
-forge test
-```
+- Stakes the ETH in StakeWise v3 validators
+- Issues **Principal Tokens (PT)** representing 1:1 claim on deposited capital
+- Issues **Yield Tokens (YT)** representing claims on future staking rewards
+- Locks the position until a specified maturity date
 
-Format on save with VSC by adding this to your settings.json
+This separation enables PT holders to access their principal liquidity while YT holders speculate on or hedge future yield. Upon maturity, token holders can redeem their respective tranches based on the actual yield generated during the staking period.
 
-```json
-"[solidity]": {
+### Key Features
 
-    "editor.defaultFormatter": "JuanBlanco.solidity"
-  },
-  "editor.formatOnSave": true,
-  "solidity.formatter": "forge",
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "[rust]": {
-    "editor.defaultFormatter": "rust-lang.rust-analyzer",
-    "editor.formatOnSave": true
-  }
-```
+- **Yield Tokenization**: Separate trading of principal and yield streams
+- **Time-Based YT Issuance**: YT amount scales with time-to-maturity (1 year = 100% of principal in YT)
+- **Flexible Maturities**: Create positions with custom maturity dates
+- **StakeWise Integration**: Leverage battle-tested staking infrastructure
+- **Exit Queue Management**: Automated handling of StakeWise's ~8-day withdrawal process
+- **Fee Mechanism**: Protocol fees on minting and redemption
 
-## Contracts
+### Use Cases
 
-- Pye Token ERC1155
-  - Token issuance and position contract creation
-  - Single point of Access to all position contracts ever created
-- Position Contract
-  - Proxy contract of SW adapter holding SW shares on deposit and Assets on ustake
-- SW Adapter
-  - Contract logic to interact with SW vaults, does not manage funds
-- Pye Registry
-  - Management of WL adapters & fees, predefined maturity timestamps,
-  - Creates beacon proxy contracts from each staking provider
+- **Principal Holders**: Lock in staking exposure while maintaining capital liquidity
+- **Yield Speculators**: Trade future staking rewards without locking principal
+- **Rate Hedging**: Hedge against changing staking yields
+- **Liquidity Providers**: Enhanced strategies using separated tranches
+
+### Yield Source
+
+The yield in P.Y.E. comes from **Ethereum staking rewards** through StakeWise v3 vaults:
+
+1. **Deposit**: Your ETH is staked in StakeWise validators, receiving shares
+2. **Accumulation**: Shares increase in value from:
+   - Consensus layer rewards (validator rewards)
+   - Execution layer rewards (MEV + priority fees)
+3. **Realization**: Upon unstaking, shares convert back to ETH at appreciated rate
+4. **Distribution**: `Yield = Total ETH received - Original Principal`
+
+**Example**: Deposit 1 ETH for 1 year → Receive 1 PT + 1 YT. After staking generates 4% yield → PT holders redeem 1 ETH (principal), YT holders redeem 0.04 ETH (yield).
+
+P.Y.E. doesn't generate yield itself—it simply **splits StakeWise staking rewards** into separate tradable tokens.
+
+## Architecture
+
+### Contract Structure
+
+#### **PyeRouterV1** - Main Entry Point & Registry
+
+`src/PyeRouterV1.1.sol`
+
+- Central router for all user interactions (deposit, requestUnstake, unstake, redeem)
+- Creates and manages bonds via BeaconProxy pattern for each (validatorVault, maturity) pair
+- Whitelists StakeWise validator vaults
+- Configures protocol fees (mintFee, redemptionFee)
+- Stores mappings of bonds and validates user access
+
+#### **StakeWiseAdapter** - Bond Implementation (BeaconProxy)
+
+`src/adapters/StakeWise/StakeWiseAdapter.sol`
+
+- Individual bond lifecycle management
+- Deposits ETH into StakeWise vault and receives shares
+- Creates PT and YT tokens for depositors
+- Manages StakeWise exit queue (requestUnstake, unstake)
+- Calculates yield split and processes redemptions
+- Each (validatorVault, maturity) pair gets its own bond instance
+
+#### **PTv1** - Principal Token (ERC20)
+
+`src/tokens/PTv1.sol`
+
+- Represents 1:1 claim on deposited principal
+- Minted on deposit, burned on redemption
+- Optional transfer lock mechanism (`isPtLocked`) via `_beforeTokenTransfer` hook
+- Access control: Only the bond contract that deployed it can mint/burn (`onlyBond` modifier)
+- Immutable bond reference set at deployment
+
+#### **YTv1** - Yield Token (ERC20)
+
+`src/tokens/YTv1.sol`
+
+- Represents proportional claim on future yield
+- Amount based on time-to-maturity formula: `ytAmount = (maturity - now) * principal / 365 days`
+- 1 year lock = 100% of principal in YT (1 ETH deposit → 1 YT)
+- 6 months lock = 50% of principal in YT (1 ETH deposit → 0.5 YT)
+- Minted on deposit, burned on redemption
+- Access control: Only the bond contract that deployed it can mint/burn (`onlyBond` modifier)
+
+### Token Mechanics
+
+**PT (Principal Token)**:
+
+- 1:1 with deposit amount
+- After maturity: redeemable for underlying ETH (minus fees)
+- Location: `StakeWiseAdapter.sol:138`
+
+**YT (Yield Token)**:
+
+- Calculated using RAY precision (1e27) for accuracy
+- Formula: `period * (principal.rayDiv(ONE_YEAR_SECONDS)) / RAY_PRECISION`
+- After unstake: proportionally redeemable against yield tranche
+- Location: `StakeWiseAdapter.sol:362-366`
 
 ## Deploymets
 
@@ -47,16 +111,15 @@ Format on save with VSC by adding this to your settings.json
 | ------------------- | -------- | ------------------------------------------------------------------------------------------ |
 | PyeRouterV1         | Jul 23th | [Holesky](https://holesky.etherscan.io/address/0x574bf19d0386d5924217ace966d72e3e555afc0f) |
 | StakeWiseAdapter    | Jul 23th | [Holesky](https://holesky.etherscan.io/address/0xe5fdcf678928b31d44fce21e0513df6f0d09895b) |
-| SW Adapter (Beacon) | Jul 23th | [Holesky](https://holesky.etherscan.io/address/0xf54756faee5f713a0ff22bf411737136d191388f)|
+| SW Adapter (Beacon) | Jul 23th | [Holesky](https://holesky.etherscan.io/address/0xf54756faee5f713a0ff22bf411737136d191388f) |
 
 ## Metadata testing
-
 
 ## Commits
 
 | version | hash                                     |
 | ------- | ---------------------------------------- |
-| v1 | d34e60a6b77ad27835e4019bb18820f2153a9abd |
+| v1      | d34e60a6b77ad27835e4019bb18820f2153a9abd |
 
 ## Deployment
 
@@ -184,3 +247,35 @@ For testing and verify the validity of the `HarvestParams` proof, the `Pye` cont
 - `encodeHarvestParams(...)`: takes the harvest params described above and encodes them into a single `bytes calldata data` field
 - `_verifyRewardsProof(...)`: takes the harvest params described above and returns a boolean weather the proof is valid for the params inclusion in the merkle tree.
 - `_time()` the current blockchain timestamp for quick calculation of positions maturity
+
+#### Test
+
+`forge t`
+
+---
+
+## Development
+
+To run locally
+
+```ssh
+forge install
+forge build
+forge test
+```
+
+Format on save with VSC by adding this to your settings.json
+
+```json
+"[solidity]": {
+
+    "editor.defaultFormatter": "JuanBlanco.solidity"
+  },
+  "editor.formatOnSave": true,
+  "solidity.formatter": "forge",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    "editor.formatOnSave": true
+  }
+```

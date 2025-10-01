@@ -21,3 +21,8 @@ ignition
 package-lock.json
 cache_hardhat
 
+.DS_Store
+.vscode
+.github
+.openzeppelin
+.wake
